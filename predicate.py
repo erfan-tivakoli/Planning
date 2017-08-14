@@ -9,8 +9,6 @@ class Predicate:
         Predicate.instances.append(self)
 
 
-
-
 def predicates_parser(lines):
     for line in lines[1:]:
         single_predicate_parser(line)
