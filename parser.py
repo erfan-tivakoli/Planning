@@ -1,5 +1,5 @@
-from Planning.operator import operators_parser
-from Planning.predicate import predicates_parser
+from operator import operators_parser
+from predicate import predicates_parser, Predicate
 
 
 def parse(file_path):
@@ -16,4 +16,9 @@ def parse(file_path):
         counter += 1
 
         operators_parser(lines[counter:])
-            
+
+
+if __name__ == '__main__':
+    parse('./../FinalProjectTools/blocks-world (simplified)/domain.txt')
+    for predicate in Predicate.instances:
+        print(predicate)

@@ -1,4 +1,4 @@
-from Planning.predicate import get_num_of_params_by_predicate_name, Predicate
+from predicate import get_num_of_params_by_predicate_name, Predicate
 
 
 class Operator:
