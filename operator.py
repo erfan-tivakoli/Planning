@@ -4,13 +4,14 @@ from predicate import get_num_of_params_by_predicate_name, Predicate
 class Operator:
     instances = []
 
-    def __init__(self, name, num_of_params):
+    def __init__(self, name, num_of_params, params_name):
         self.name = name
         self.num_of_params = num_of_params
         self.preconds = []
         self.added_effects = []
         self.negative_effects = []
         Operator.instances.append(self)
+        self.params_name = params_name
 
     def set_preconds(self, preconds):
         self.preconds = preconds
@@ -46,7 +47,7 @@ def single_operator_parser(lines):
         params.append(line)
         counter += 1
 
-    o = Operator(name, num_of_parameters)
+    o = Operator(name, num_of_parameters, params)
 
     num_of_preconds = int(lines[1].split(':')[counter])
     counter += 1
