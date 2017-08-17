@@ -22,7 +22,7 @@ def single_predicate_parser(line):
 
 
 def get_num_of_params_by_predicate_name(name):
-    name = name.lower()
+    name = name.lower().strip()
     for predicate in Predicate.instances:
         if predicate.name == name:
             return predicate.num_of_params

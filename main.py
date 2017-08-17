@@ -1,4 +1,4 @@
-import operator
+import my_operator
 
 
 def main():
@@ -10,7 +10,7 @@ objects = []
 
 def delta(s):
     print "delta"
-    operators = operator.
+    operators = my_operator.
 
 
 if __name__ == '__main__':

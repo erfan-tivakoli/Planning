@@ -1,4 +1,4 @@
-from operator import operators_parser
+from my_operator import operators_parser, Operator
 from predicate import predicates_parser, Predicate
 
 
@@ -13,12 +13,15 @@ def parse(file_path):
 
         counter += 2
 
-        counter += 1
-
         operators_parser(lines[counter:])
 
 
 if __name__ == '__main__':
     parse('./../FinalProjectTools/blocks-world (simplified)/domain.txt')
+    print("~~~~~~~~~~~~~~~Predicates~~~~~~~~~~~~~~~")
     for predicate in Predicate.instances:
         print(predicate)
+
+    print("~~~~~~~~~~~~~~~Operators~~~~~~~~~~~~~~~")
+    for operator in Operator.instances:
+        print(operator)
