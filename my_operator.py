@@ -28,7 +28,7 @@ class Operator:
 def operators_parser(lines):
     single_operator_info = []
     for line in lines[1:]:
-        if line == '\n':
+        if line == '':
             single_operator_parser(single_operator_info)
             single_operator_info = []
         else:
@@ -36,6 +36,8 @@ def operators_parser(lines):
 
 
 def single_operator_parser(lines):
+    if len(lines) == 0:
+        return
     name = lines[0].strip()
 
     num_of_parameters = int(lines[1].split(':')[1])

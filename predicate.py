@@ -10,6 +10,12 @@ class Predicate:
     def __str__(self):
         return self.name + " has " + str(self.num_of_params) + " parameters"
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            if self.name == other.name and self.params == other.params:
+                return True
+        return False
+
 
 def predicates_parser(lines):
     for line in lines[1:]:
@@ -27,3 +33,4 @@ def get_num_of_params_by_predicate_name(name):
         if predicate.name == name:
             return predicate.num_of_params
     return None
+

@@ -1,19 +1,31 @@
+import re
+
 from my_operator import operators_parser, Operator
+from object import objects_parser, Object
 from predicate import predicates_parser, Predicate
+from state import state_parser, State
 
 
 def parse(file_path):
     with open(file_path, 'r') as f:
-        lines = f.readlines()
-        counter = 0
-        num_of_predicates = int(lines[counter].split(":")[1])
-        predicates_parser(lines[:num_of_predicates + 1])
 
-        counter += num_of_predicates + 1
+        content = f.read()
+        parts = re.split('\n\n\n', content)
 
-        counter += 2
+        for part in parts:
+            lines = part.split('\n')
+            header_line = lines[0]
+            if header_line.__contains__("PREDICATES"):
+                predicates_parser(lines)
+            elif header_line.__contains__("OPERATORS"):
+                operators_parser(lines)
+            elif header_line.__contains__("OBJECTS"):
+                objects_parser(lines)
+            elif header_line.__contains__("INITIAL-STATE"):
+                state_parser(lines)
+            elif header_line.__contains__("GOALS"):
+                state_parser(lines)
 
-        operators_parser(lines[counter:])
 
 
 if __name__ == '__main__':
@@ -25,3 +37,15 @@ if __name__ == '__main__':
     print("~~~~~~~~~~~~~~~Operators~~~~~~~~~~~~~~~")
     for operator in Operator.instances:
         print(operator)
+
+    parse('./../FinalProjectTools/blocks-world (simplified)/large-a.txt')
+    print("~~~~~~~~~~~~~~~Objects~~~~~~~~~~~~~~~")
+    for object in Object.instances:
+        print(object)
+
+    print("~~~~~~~~~~~~~~~States~~~~~~~~~~~~~~~")
+    for state in State.instances:
+        print(state)
+
+
+
