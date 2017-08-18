@@ -1,4 +1,4 @@
-from operator import Operator
+from my_operator import Operator
 from predicate import Predicate
 import itertools
 
