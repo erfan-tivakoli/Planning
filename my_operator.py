@@ -1,4 +1,5 @@
 from predicate import get_num_of_params_by_predicate_name, Predicate
+from HSP import hash_predicate
 
 
 class Operator:
@@ -99,3 +100,66 @@ def single_operator_parser(lines):
         p = Predicate(predicate_name, num_of_predicate_params, predicate_params)
         o.add_deleted_effects(p)
         num_of_retrieved_deleted_effects += 1
+
+
+def get_added_effects(op):
+    res = []
+    raw_op = op[0]
+    params_values = op[1]
+    params = dict()
+    for i in range(0, len(raw_op.params_name)):
+        name = raw_op.params_name[i]
+        params[name] = params_values[i]
+    effects = raw_op.added_effects
+    for effect in effects:
+        eff_params_name = effect.params
+        eff_params = []
+        for i in range(0,eff_params_name):
+            name = eff_params_name[i]
+            eff_params.append(params[name])
+        ground_effect = hash_predicate((effect, eff_params))
+        res.append(ground_effect)
+    return res
+
+
+def get_deleted_effects(op):
+    res = []
+    raw_op = op[0]
+    params_values = op[1]
+    params = dict()
+    for i in range(0, len(raw_op.params_name)):
+        name = raw_op.params_name[i]
+        params[name] = params_values[i]
+    effects = raw_op.negative_effects
+    for effect in effects:
+        eff_params_name = effect.params
+        eff_params = []
+        for i in range(0,eff_params_name):
+            name = eff_params_name[i]
+            eff_params.append(params[name])
+        ground_effect = hash_predicate((effect, eff_params))
+        res.append(ground_effect)
+    return res
+
+
+def check_preconditions(U, op):
+    res = []
+    raw_op = op[0]
+    params_values = op[1]
+    params = dict()
+    for i in range(0, len(raw_op.params_name)):
+        name = raw_op.params_name[i]
+        params[name] = params_values[i]
+    preconds = raw_op.preconds
+    for precond in preconds:
+        pre_params_name = precond.params
+        pre_params = []
+        for i in range(0,pre_params_name):
+            name = pre_params_name[i]
+            pre_params.append(params[name])
+        ground_precondition = hash_predicate((precond, pre_params))
+        if ground_precondition not in U:
+            return []
+        res.append(ground_precondition)
+    return res
+
