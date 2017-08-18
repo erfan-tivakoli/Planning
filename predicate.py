@@ -18,13 +18,17 @@ class Predicate:
 
 
 def predicates_parser(lines):
+    predicates = []
     for line in lines[1:]:
-        single_predicate_parser(line)
+        predicates.append(single_predicate_parser(line))
+    return predicates
 
 
 def single_predicate_parser(line):
     name, num_of_params = line.split(':')
+    name = name.lower().strip()
     p = Predicate(name, int(num_of_params))
+    return p
 
 
 def get_num_of_params_by_predicate_name(name):
@@ -33,4 +37,13 @@ def get_num_of_params_by_predicate_name(name):
         if predicate.name == name:
             return predicate.num_of_params
     return None
+
+
+def hash_predicate(p):
+    raw_predicate = (p[0].name, tuple(p[1]))
+    return hash(raw_predicate)
+
+
+def hash_predicates(p, q):
+    return hash(frozenset([p, q]))
 

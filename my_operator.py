@@ -1,5 +1,5 @@
 from predicate import get_num_of_params_by_predicate_name, Predicate
-from HSP import hash_predicate
+from predicate import hash_predicate
 
 
 class Operator:
@@ -7,7 +7,7 @@ class Operator:
 
     def __init__(self, name, num_of_params, params_name):
         self.name = name
-        self.num_of_params = params_name
+        self.params_name = params_name
         self.num_of_params = num_of_params
         self.preconds = []
         self.added_effects = []

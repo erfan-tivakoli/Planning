@@ -1,12 +1,6 @@
 from my_operator import check_preconditions, get_added_effects, get_deleted_effects
-from problem import Problem
 import itertools
-
-
-def main():
-    print("salam")
-    problem = Problem()
-    HSP([], problem.init_state, problem.all_ground_operators, problem.all_ground_predicates)
+from predicate import hash_predicates
 
 
 def HSP(plan, state, goals, actions, predicates):
@@ -89,16 +83,3 @@ def max_pairs(goals, res):
     for pair in pairs:
         maximum = max(maximum, res[hash_predicates(pair[0], pair[1])])
     return maximum
-
-
-def hash_predicate(p):
-    raw_predicate = (p[0].name, p[1])
-    return hash(raw_predicate)
-
-
-def hash_predicates(p, q):
-    return hash(frozenset([p, q]))
-
-
-if __name__ == '__main__':
-        main()

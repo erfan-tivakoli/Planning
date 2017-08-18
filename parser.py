@@ -4,48 +4,42 @@ from my_operator import operators_parser, Operator
 from object import objects_parser, Object
 from predicate import predicates_parser, Predicate
 from state import state_parser, State
+from problem import Problem
 
 
-def parse(file_path):
+def parse(file_path, all_predicates=None):
     with open(file_path, 'r') as f:
 
         content = f.read()
-        parts = re.split('\n\n\n', content)
-
+        parts = re.split('\n\r\n\r\n', content)
+        is_problem = False
         for part in parts:
             lines = part.split('\n')
             header_line = lines[0]
             if header_line.__contains__("PREDICATES"):
-                predicates_parser(lines)
+                all_predicates = predicates_parser(lines)
             elif header_line.__contains__("OPERATORS"):
                 operators_parser(lines)
             elif header_line.__contains__("OBJECTS"):
+                is_problem = True
                 objects_parser(lines)
             elif header_line.__contains__("INITIAL-STATE"):
-                state_parser(lines)
+                init_state = state_parser(lines)
             elif header_line.__contains__("GOALS"):
-                state_parser(lines)
+                goal_state = state_parser(lines)
+        objects = []
+        for ob in Object.instances:
+            objects.append(ob.name)
+        if is_problem:
+            return Problem(len(objects), objects, init_state, goal_state, all_predicates)
+        else:
+            return all_predicates
 
 
+def parser(domain_path, problem_path):
+    # parse(domain_path)
+    all_predicates = parse('./../FinalProjectTools/blocks-world (simplified)/domain.txt')
 
-if __name__ == '__main__':
-    parse('./../FinalProjectTools/blocks-world (simplified)/domain.txt')
-    print("~~~~~~~~~~~~~~~Predicates~~~~~~~~~~~~~~~")
-    for predicate in Predicate.instances:
-        print(predicate)
-
-    print("~~~~~~~~~~~~~~~Operators~~~~~~~~~~~~~~~")
-    for operator in Operator.instances:
-        print(operator)
-
-    parse('./../FinalProjectTools/blocks-world (simplified)/large-a.txt')
-    print("~~~~~~~~~~~~~~~Objects~~~~~~~~~~~~~~~")
-    for object in Object.instances:
-        print(object)
-
-    print("~~~~~~~~~~~~~~~States~~~~~~~~~~~~~~~")
-    for state in State.instances:
-        print(state)
-
-
-
+    # parse(problem_path)
+    problem = parse('./../FinalProjectTools/blocks-world (simplified)/large-a.txt', all_predicates)
+    return problem
