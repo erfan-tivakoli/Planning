@@ -4,9 +4,8 @@ from predicate import hash_predicate
 
 
 def main():
-    problem = parser("", "")
-    # hashed_init = state_to_set(problem.init_state)
-    # hashed_goals = state_to_set(problem.goal_state)
+    problem = parser("domain.txt", "simple.txt")
+
     hashed_ground_predicates = dict()
     for p in problem.all_ground_predicates:
         hashed_ground_predicates[hash_predicate(p)] = p
