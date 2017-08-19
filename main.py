@@ -6,12 +6,20 @@ from predicate import hash_predicate
 def main():
     print("salam")
     problem = parser("", "")
-    hashed_init = state_to_set(problem.init_state)
-    hashed_goals = state_to_set(problem.goal_state)
-    hashed_ground_predicates = []
-    for p in problem.all_ground_predicates:
-        hashed_ground_predicates.append(hash_predicate(p))
-    HSP([], hashed_init, hashed_goals, problem.all_ground_operators, hashed_ground_predicates)
+    test()
+    # hashed_init = state_to_set(problem.init_state)
+    # hashed_goals = state_to_set(problem.goal_state)
+    # hashed_ground_predicates = []
+    # for p in problem.all_ground_predicates:
+    #     hashed_ground_predicates.append(hash_predicate(p))
+    # plan = HSP([], hashed_init, hashed_goals, problem.all_ground_operators, hashed_ground_predicates)
+    # print plan
+
+
+def test():
+    from predicate import Predicate
+    for p in Predicate.instances:
+        print(p.name + " " + str(p.num_of_params) + " " + str(p.params))
 
 
 def state_to_set(state_object):

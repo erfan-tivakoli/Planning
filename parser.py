@@ -11,10 +11,14 @@ def parse(file_path, all_predicates=None):
     with open(file_path, 'r') as f:
 
         content = f.read()
-        parts = re.split('\n\r\n\r\n', content)
+        parts = re.split('\n\n\n', content)
         is_problem = False
         for part in parts:
-            lines = part.split('\n')
+            raw_lines = part.split('\n')
+            lines = []
+            for raw_line in raw_lines:
+                lines.append(raw_line.lower().strip("\n \t \r"))
+            print(lines)
             header_line = lines[0]
             if header_line.__contains__("PREDICATES"):
                 all_predicates = predicates_parser(lines)
