@@ -22,10 +22,10 @@ class Problem:
 def get_all_ground_operators(objects_combinations):
     ground_operators = []
     operators = Operator.instances
-    for operator in operators:
-        all_possible_params = objects_combinations[operator.num_of_params]
+    for op in operators:
+        all_possible_params = objects_combinations[op.num_of_params]
         for param in all_possible_params:
-            ground_operators.append((operator, param))
+            ground_operators.append((op, param))
     return ground_operators
 
 

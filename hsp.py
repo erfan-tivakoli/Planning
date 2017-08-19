@@ -1,10 +1,12 @@
 from my_operator import check_preconditions, get_added_effects, get_deleted_effects
 import itertools
-from predicate import hash_predicates
+from predicate import hash_predicates,hash_predicate
 
 
 def HSP(plan, state, goals, actions, predicates):
-    if goals.issubset(state):
+    goals_predicates = set(goals.predicates.keys())
+    state_predicates = set(state.predicates.keys())
+    if goals_predicates.issubset(state_predicates):
         return plan
     options = []
     for action in actions:
@@ -26,9 +28,9 @@ def HSP(plan, state, goals, actions, predicates):
 
 def select_action(options, goals):
     min_index = 0
-    min_value = max_pairs(goals, options[0][1])
+    min_value = max_pairs(goals.keys(), options[0][1])
     for i in range(1, len(options)):
-        temp = max_pairs(goals, options[1])
+        temp = max_pairs(goals.keys(), options[1])
         if min_value > temp:
             min_value = temp
             min_index = i
@@ -38,8 +40,10 @@ def select_action(options, goals):
 def next_state(state, action):
     added = get_added_effects(action)
     deleted = get_deleted_effects(action)
-    state.union(added)
-    return state.difference(deleted)
+    nex_state = state.copy()
+    nex_state.add_predicates(added)
+    nex_state.delete_predicates(deleted)
+    return nex_state
 
 
 def delta(s, all_ground_predicates, all_ground_operators):
@@ -50,25 +54,24 @@ def delta(s, all_ground_predicates, all_ground_operators):
         for q in all_ground_predicates:
             res[hash_predicates(p, q)] = -1
 
-    for p in s:
-        for q in s:
+    for p in s.predicates:
+        for q in s.predicates:
             res[hash_predicates(p, q)] = 0
 
-    U = set()
-    U = U.union(s)
+    U = s.copy()
     no_change = False
     while no_change:
         no_change = True
         for op in all_ground_operators:
-            pre_connds = check_preconditions(U, op)
-            if len(pre_connds) > 0:  # Check if operation is applicable on U
+            pre_conds = check_preconditions(U, op)
+            if len(pre_conds) > 0:  # Check if operation is applicable on U
                 effects = get_added_effects(op)
-                U = U.union(effects)
+                U.add_predicates(effects)
                 for p in effects:
-                    for q in U:
-                        key = hash_predicates(p, q)
+                    for q in U.predicates:
+                        key = hash_predicates(hash_predicate(p), q)
                         last_value = res[key]
-                        new_value = max_pairs(pre_connds, res) + 1
+                        new_value = max_pairs(pre_conds, res) + 1
                         if last_value > new_value:
                             res[key] = new_value
                             no_change = False
@@ -81,5 +84,6 @@ def max_pairs(goals, res):
     pairs = set(itertools.combinations(goals, 2))
     maximum = 0
     for pair in pairs:
-        maximum = max(maximum, res[hash_predicates(pair[0], pair[1])])
+        key = hash_predicates(pair[0], pair[1])
+        maximum = max(maximum, res[key])
     return maximum
