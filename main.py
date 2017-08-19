@@ -5,12 +5,14 @@ from predicate import hash_predicate
 
 def main():
     problem = parser("", "")
-    hashed_init = state_to_set(problem.init_state)
-    hashed_goals = state_to_set(problem.goal_state)
-    hashed_ground_predicates = []
+    # hashed_init = state_to_set(problem.init_state)
+    # hashed_goals = state_to_set(problem.goal_state)
+    hashed_ground_predicates = dict()
     for p in problem.all_ground_predicates:
-        hashed_ground_predicates.append(hash_predicate(p))
-    plan = HSP([], hashed_init, hashed_goals, problem.all_ground_operators, hashed_ground_predicates)
+        hashed_ground_predicates[hash_predicate(p)] = p
+    # for key in problem.init_state.predicates:
+    #     print str(key) + " " + str(problem.init_state.predicates[key])
+    plan = HSP([], problem.init_state, problem.goal_state, problem.all_ground_operators, hashed_ground_predicates)
     print plan
 
 

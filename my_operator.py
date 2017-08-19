@@ -120,7 +120,7 @@ def get_added_effects(op):
             name = eff_params_name[i]
             eff_params.append(params[name])
         ground_effect = hash_predicate((effect, eff_params))
-        res.append(ground_effect)
+        res.append((effect, eff_params))
     return res
 
 
@@ -140,7 +140,7 @@ def get_deleted_effects(op):
             name = eff_params_name[i]
             eff_params.append(params[name])
         ground_effect = hash_predicate((effect, eff_params))
-        res.append(ground_effect)
+        res.append((effect, eff_params))
     return res
 
 
@@ -160,7 +160,7 @@ def check_preconditions(U, op):
             name = pre_params_name[i]
             pre_params.append(params[name])
         ground_precondition = hash_predicate((precond, pre_params))
-        if ground_precondition not in U:
+        if ground_precondition not in U.predicates:
             return []
         res.append(ground_precondition)
     return res
