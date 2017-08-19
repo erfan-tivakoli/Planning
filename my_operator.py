@@ -145,7 +145,7 @@ def get_deleted_effects(op):
 
 
 def check_preconditions(U, op):
-    res = []
+    res = dict()
     raw_op = op[0]
     params_values = op[1]
     params = dict()
@@ -159,8 +159,8 @@ def check_preconditions(U, op):
         for i in range(0, len(pre_params_name)):
             name = pre_params_name[i]
             pre_params.append(params[name])
-        ground_precondition = hash_predicate((precond, pre_params))
-        if ground_precondition not in U.predicates:
+        hashed_ground_precondition = hash_predicate((precond, pre_params))
+        if hashed_ground_precondition not in U.predicates:
             return []
-        res.append(ground_precondition)
+        res[hashed_ground_precondition] = (precond, pre_params)
     return res

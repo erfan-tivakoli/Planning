@@ -1,5 +1,3 @@
-import math
-
 import sys
 
 from my_operator import check_preconditions, get_added_effects, get_deleted_effects
@@ -32,9 +30,9 @@ def HSP(plan, state, goals, actions, predicates):
 
 def select_action(options, goals):
     min_index = 0
-    min_value = max_pairs(goals.predicates.keys(), options[0][1])
+    min_value = max_pairs(goals.predicates, options[0][1])
     for i in range(1, len(options)):
-        temp = max_pairs(goals.predicates.keys(), options[i][1])
+        temp = max_pairs(goals.predicates, options[i][1])
         if min_value > temp:
             min_value = temp
             min_index = i
@@ -63,9 +61,9 @@ def delta(s, all_ground_predicates, all_ground_operators):
             res[hash_predicates(p, q)] = 0
 
     U = s.copy()
-    no_change = False
-    while no_change:
-        no_change = True
+    change = True
+    while change:
+        change = False
         for op in all_ground_operators:
             pre_conds = check_preconditions(U, op)
             if len(pre_conds) > 0:  # Check if operation is applicable on U
@@ -78,14 +76,15 @@ def delta(s, all_ground_predicates, all_ground_operators):
                         new_value = max_pairs(pre_conds, res) + 1
                         if last_value > new_value:
                             res[key] = new_value
-                            no_change = False
+                            change = True
     return res
 
 
 def max_pairs(goals, res):
     if len(goals) == 1:
-        goals.append(goals[0])
-    pairs = set(itertools.combinations(goals, 2))
+        pairs = (goals.keys()[0], goals.keys()[0])
+    else:
+        pairs = set(itertools.combinations(goals.keys(), 2))
     maximum = 0
     for pair in pairs:
         key = hash_predicates(pair[0], pair[1])
