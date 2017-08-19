@@ -81,8 +81,9 @@ def delta(s, all_ground_predicates, all_ground_operators):
 
 
 def max_pairs(goals, res):
+    pairs = set()
     if len(goals) == 1:
-        pairs = (goals.keys()[0], goals.keys()[0])
+        pairs.add((goals.keys()[0], goals.keys()[0]))
     else:
         pairs = set(itertools.combinations(goals.keys(), 2))
     maximum = 0
