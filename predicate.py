@@ -8,7 +8,7 @@ class Predicate:
         Predicate.instances.append(self)
 
     def __str__(self):
-        return self.name + " has " + str(self.num_of_params) + " parameters"
+        return self.name + " has " + str(self.num_of_params) + " parameters : " + str(self.params)
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
