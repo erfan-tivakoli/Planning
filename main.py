@@ -4,9 +4,11 @@ from predicate import hash_predicate
 
 
 def main():
-    problem = parser("", "")
-    # hashed_init = state_to_set(problem.init_state)
-    # hashed_goals = state_to_set(problem.goal_state)
+    import itertools
+    # a = itertools.combinations_with_replacement([1, 2, 3], 2)
+    # for b in a:
+    #     print b
+    problem = parser("domain.txt", "reversal4.txt")
     hashed_ground_predicates = dict()
     for p in problem.all_ground_predicates:
         hashed_ground_predicates[hash_predicate(p)] = p
