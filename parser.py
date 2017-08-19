@@ -40,9 +40,7 @@ def parse(file_path, all_predicates=None):
 
 
 def parser(domain_path, problem_path):
-    # parse(domain_path)
-    all_predicates = parse('./../FinalProjectTools/blocks-world (simplified)/domain.txt')
+    all_predicates = parse('./../FinalProjectTools/blocks-world (simplified)/' + domain_path)
 
-    # parse(problem_path)
-    problem = parse('./../FinalProjectTools/blocks-world (simplified)/simple.txt', all_predicates)
+    problem = parse('./../FinalProjectTools/blocks-world (simplified)/' + problem_path, all_predicates)
     return problem

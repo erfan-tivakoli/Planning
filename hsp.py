@@ -1,3 +1,7 @@
+import math
+
+import sys
+
 from my_operator import check_preconditions, get_added_effects, get_deleted_effects
 import itertools
 from predicate import hash_predicates,hash_predicate
@@ -28,9 +32,9 @@ def HSP(plan, state, goals, actions, predicates):
 
 def select_action(options, goals):
     min_index = 0
-    min_value = max_pairs(goals.keys(), options[0][1])
+    min_value = max_pairs(goals.predicates.keys(), options[0][1])
     for i in range(1, len(options)):
-        temp = max_pairs(goals.keys(), options[1])
+        temp = max_pairs(goals.predicates.keys(), options[i][1])
         if min_value > temp:
             min_value = temp
             min_index = i
@@ -52,7 +56,7 @@ def delta(s, all_ground_predicates, all_ground_operators):
     res = dict()
     for p in all_ground_predicates:
         for q in all_ground_predicates:
-            res[hash_predicates(p, q)] = -1
+            res[hash_predicates(p, q)] = sys.maxint
 
     for p in s.predicates:
         for q in s.predicates:

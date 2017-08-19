@@ -116,7 +116,7 @@ def get_added_effects(op):
     for effect in effects:
         eff_params_name = effect.params
         eff_params = []
-        for i in range(0, eff_params_name):
+        for i in range(0, len(eff_params_name)):
             name = eff_params_name[i]
             eff_params.append(params[name])
         ground_effect = hash_predicate((effect, eff_params))
@@ -136,7 +136,7 @@ def get_deleted_effects(op):
     for effect in effects:
         eff_params_name = effect.params
         eff_params = []
-        for i in range(0, eff_params_name):
+        for i in range(0, len(eff_params_name)):
             name = eff_params_name[i]
             eff_params.append(params[name])
         ground_effect = hash_predicate((effect, eff_params))

@@ -13,7 +13,7 @@ def main():
     # for key in problem.init_state.predicates:
     #     print str(key) + " " + str(problem.init_state.predicates[key])
     plan = HSP([], problem.init_state, problem.goal_state, problem.all_ground_operators, hashed_ground_predicates)
-    print plan
+    print '\n'.join(str(operator[0].name) + " " + str(operator[1]) for operator in plan)
 
 
 def test():

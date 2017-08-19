@@ -16,6 +16,10 @@ class Predicate:
                 return True
         return False
 
+    def copy(self):
+        newOne = Predicate(self.name, self.num_of_params, self.params)
+        return newOne
+
 
 def predicates_parser(lines):
     predicates = []
@@ -46,4 +50,3 @@ def hash_predicate(p):
 
 def hash_predicates(p, q):
     return hash(frozenset([p, q]))
-

@@ -41,6 +41,11 @@ class State:
     def __str__(self):
         return "The state has: " + ','.join(str(predicate) for predicate in self.predicates)
 
+    def copy(self):
+        newone = State()
+        newone.predicates.update(self.predicates)
+        return newone
+
 
 def state_parser(lines):
     counter = 1
