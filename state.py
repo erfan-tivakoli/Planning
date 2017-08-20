@@ -46,6 +46,13 @@ class State:
         newone.predicates.update(self.predicates)
         return newone
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            if len(self.predicates) == len(other.predicates):
+                if set(self.predicates.keys()) == set(other.predicates.keys()):
+                    return True
+        return False
+
 
 def state_parser(lines):
     counter = 1
