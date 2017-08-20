@@ -8,7 +8,7 @@ def main():
     # a = itertools.combinations_with_replacement([1, 2, 3], 2)
     # for b in a:
     #     print b
-    problem = parser("domain.txt", "twelve-step.txt")
+    problem = parser("domain.txt", "large-a.txt")
     hashed_ground_predicates = dict()
     for p in problem.all_ground_predicates:
         hashed_ground_predicates[hash_predicate(p)] = p
