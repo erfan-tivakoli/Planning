@@ -5,24 +5,38 @@ from predicate import hash_predicate
 class State:
 
     def __init__(self):
-        self.predicates = []
+        self.predicates = dict()
         # State.instances.append(self)
 
     def add_predicate(self, predicate):
-        self.predicates.append(predicate)
+        key = hash_predicate((predicate, predicate.params))
+        self.predicates[key] = predicate
 
     def add_predicates(self, add_list):
-        self.predicates += add_list
+        for add_item in add_list:
+            key = hash_predicate(add_item)
+            new_predicate = add_item[0].copy()
+            new_predicate.params = add_item[1]
+            self.predicates[key] = new_predicate
 
-    def delete_predicate(self, removed_predicate):
+    def delete_predicates(self, delete_list):
+        for delete_item in delete_list:
+            key = hash_predicate(delete_item)
+            self.predicates.pop(key, None)
+
+    def remove_predicate(self, removed_predicate):
         for predicate in self.predicates:
             if predicate == removed_predicate:
                 self.predicates.remove(predicate)
                 break
 
-    def delete_predicates(self, delete_list):
-        for predicate in delete_list:
-            self.delete_predicate(predicate)
+    # def hash_state(self):
+    #     state_predicates = self.predicates
+    #     state = set()
+    #     for predicate in state_predicates:
+    #         state.add(hash_predicate((predicate, predicate.params)))
+    #     self.hashed_predicates = state
+    #     return state
 
     def __str__(self):
         return "The state has: " + ','.join(str(predicate) for predicate in self.predicates)
