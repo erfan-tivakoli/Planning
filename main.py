@@ -19,6 +19,7 @@ def main():
     print '\n'.join(str(plan.index(operator)) + ": (" + str(operator[0].name) + " " + ' '.join(p for p in operator[1]) + ")" for operator in plan)
 
 
+
 def test():
     from predicate import Predicate
     for p in Predicate.instances:
