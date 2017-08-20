@@ -4,6 +4,7 @@ from predicate import hash_predicate
 
 class State:
 
+
     def __init__(self):
         self.predicates = dict()
         # State.instances.append(self)
