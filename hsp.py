@@ -3,7 +3,7 @@ import sys
 from my_operator import check_preconditions, get_added_effects, get_deleted_effects
 import itertools
 from predicate import hash_predicates, hash_predicate
-
+visited_states = []
 
 def HSP(plan, state, goals, actions, predicates):
     goals_predicates = set(goals.predicates.keys())
@@ -11,7 +11,7 @@ def HSP(plan, state, goals, actions, predicates):
     if goals_predicates.issubset(state_predicates):
         return plan
     options = []
-    visited_states = []
+
     for action in actions:
         if len(check_preconditions(state, action)) > 0:
             next_s = next_state(state, action)
