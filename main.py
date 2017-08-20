@@ -8,14 +8,15 @@ def main():
     # a = itertools.combinations_with_replacement([1, 2, 3], 2)
     # for b in a:
     #     print b
-    problem = parser("domain.txt", "large-a.txt")
+    problem = parser("domain.txt", "sussman-anomaly.txt")
     hashed_ground_predicates = dict()
     for p in problem.all_ground_predicates:
         hashed_ground_predicates[hash_predicate(p)] = p
     # for key in problem.init_state.predicates:
     #     print str(key) + " " + str(problem.init_state.predicates[key])
     plan = HSP([], problem.init_state, problem.goal_state, problem.all_ground_operators, hashed_ground_predicates)
-    print '\n'.join(str(operator[0].name) + " " + str(operator[1]) for operator in plan)
+    print "~~~~~~~~~~~~~~~~~~~~~~~Plan is:~~~~~~~~~~~~~~~~~~~~~~~"
+    print '\n'.join(str(plan.index(operator)) + ": (" + str(operator[0].name) + " " + ' '.join(p for p in operator[1]) + ")" for operator in plan)
 
 
 def test():
